@@ -260,10 +260,102 @@ namespace RaidPuzzler
                 var tmp = listBox1.Items[listBox1.SelectedIndex];
                 listBox1.Items[listBox1.SelectedIndex] = listBox1.Items[up];
                 listBox1.Items[up] = tmp;
+
+                var iTmp = rs.DiskPositions.First(p => p.Value == listBox1.SelectedIndex);
+                var iTmp2 = rs.DiskPositions.First(p => p.Value == up);
+                rs.DiskPositions[iTmp.Key] = up;
+                rs.DiskPositions[iTmp2.Key] = listBox1.SelectedIndex;
+
+                foreach (DataRow row in (dataGridView1.DataSource as DataTable).Rows)
+                {
+                    int rowIndex = (dataGridView1.DataSource as DataTable).Rows.IndexOf(row);
+                    if (!row[listBox1.SelectedIndex].Equals("P"))
+                    {
+                        rs.Arrangement.Remove(int.Parse((string)row[listBox1.SelectedIndex]));
+                    }
+
+                    if (!row[up].Equals("P"))
+                    {
+                        rs.Arrangement.Remove(int.Parse((string)row[up]));
+                    }
+
+                    var oTmp = row[listBox1.SelectedIndex];
+                    row[listBox1.SelectedIndex] = row[up];
+                    row[up] = oTmp;
+
+                    if (!row[listBox1.SelectedIndex].Equals("P"))
+                    {
+                        rs.Arrangement.Add(int.Parse((string)row[listBox1.SelectedIndex]),
+                            rs.NumDiscs * rowIndex + listBox1.SelectedIndex);
+                    }
+
+                    if (!row[up].Equals("P"))
+                    {
+                        rs.Arrangement.Add(int.Parse((string)row[up]),
+                            rs.NumDiscs * rowIndex + up);
+                    }
+                }
+
+
                 listBox1.SelectedIndex = up;
 
+
+                FillPictures();
             }
 
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            if (listBox1.SelectedIndex >= 0 && listBox1.SelectedIndex < listBox1.Items.Count - 1)
+            {
+                int down = listBox1.SelectedIndex + 1;
+                var tmp = listBox1.Items[listBox1.SelectedIndex];
+                listBox1.Items[listBox1.SelectedIndex] = listBox1.Items[down];
+                listBox1.Items[down] = tmp;
+
+                var iTmp = rs.DiskPositions.First(p => p.Value == listBox1.SelectedIndex);
+                var iTmp2 = rs.DiskPositions.First(p => p.Value == down);
+                rs.DiskPositions[iTmp.Key] = down;
+                rs.DiskPositions[iTmp2.Key] = listBox1.SelectedIndex;
+
+                foreach (DataRow row in (dataGridView1.DataSource as DataTable).Rows)
+                {
+                    int rowIndex = (dataGridView1.DataSource as DataTable).Rows.IndexOf(row);
+                    if (!row[listBox1.SelectedIndex].Equals("P"))
+                    {
+                        rs.Arrangement.Remove(int.Parse((string)row[listBox1.SelectedIndex]));
+                    }
+
+                    if (!row[down].Equals("P"))
+                    {
+                        rs.Arrangement.Remove(int.Parse((string)row[down]));
+                    }
+
+                    var oTmp = row[listBox1.SelectedIndex];
+                    row[listBox1.SelectedIndex] = row[down];
+                    row[down] = oTmp;
+
+                    if (!row[listBox1.SelectedIndex].Equals("P"))
+                    {
+                        rs.Arrangement.Add(int.Parse((string)row[listBox1.SelectedIndex]),
+                            rs.NumDiscs * rowIndex + listBox1.SelectedIndex);
+                    }
+
+                    if (!row[down].Equals("P"))
+                    {
+                        rs.Arrangement.Add(int.Parse((string)row[down]),
+                            rs.NumDiscs * rowIndex + down);
+                    }
+                }
+
+
+                listBox1.SelectedIndex = down;
+
+
+                FillPictures();
+
+            }
         }
     }
 }

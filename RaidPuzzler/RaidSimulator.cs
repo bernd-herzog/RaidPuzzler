@@ -31,7 +31,7 @@ namespace RaidPuzzler
 
         public RaidSimulator()
         {
-
+            DiskNames = new Dictionary<int, string>();
         }
 
         public void AddFile(string file)
@@ -178,7 +178,7 @@ namespace RaidPuzzler
                     //in: start, disk(i)
                     //out: basePos + otherPos * ChunkSize + offsetInChunk 
                     int ret;
-                    CalcPositionDiskToVirtual(start, DiskPositions[diskId], out ret);
+                    CalcPositionDiskToVirtual(start, diskId, out ret);
 
                     if (ret != -1)
                         yield return ret;
@@ -187,7 +187,7 @@ namespace RaidPuzzler
             }
         }
 
-        private void CalcPositionDiskToVirtual(int start, int i, out int ret)
+        private void CalcPositionDiskToVirtual(int start, int diskId, out int ret)
         {
             ret = -1;
             int repeatSizeOnDisk = NumDiscs * ChunkSize;
@@ -202,7 +202,7 @@ namespace RaidPuzzler
 
             int basePos = basePosOnDisk / repeatSizeOnDisk * dataSizeOnDisk * NumDiscs;
 
-            int inTablePos = i + NumDiscs * (chunkOffsetOnDisk / ChunkSize);
+            int inTablePos = DiskPositions[diskId] + NumDiscs * (chunkOffsetOnDisk / ChunkSize);
 
             if (Arrangement.Where(o => o.Value == inTablePos).Select(o => o.Key).Any())
             {
@@ -228,7 +228,9 @@ namespace RaidPuzzler
             long inTablePos = inTable / ChunkSize; // key
 
             int onDiskTablePos = Arrangement[(int)inTablePos];
-            discId = onDiskTablePos % NumDiscs;
+            int diskPos = onDiskTablePos % NumDiscs;
+            discId = DiskPositions.First(p => p.Value == diskPos).Key;
+             
             int line = onDiskTablePos / NumDiscs;
 
             startOnDisk = basePosInDisk + line * ChunkSize + offsetInChunk;
