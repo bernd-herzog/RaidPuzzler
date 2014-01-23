@@ -21,6 +21,9 @@ namespace RaidPuzzler
         public int NumDiscs { get { return files.Count; } }
         public long Size { get; set; }
 
+        public Dictionary<int, string> DiskNames { get; set; }
+        public Dictionary<int, int> DiskPositions { get; set; } // [diskId] = position
+
 
         private Dictionary<string, FileStream> files = new Dictionary<string, FileStream>();
         private Dictionary<string, List<int>> _imageStarts = new Dictionary<string, List<int>>();
@@ -33,6 +36,8 @@ namespace RaidPuzzler
 
         public void AddFile(string file)
         {
+            DiskNames.Add(NumDiscs, Path.GetFileName(file));
+
             _imageStarts.Add(file, new List<int>());
             _imageEnds.Add(file, new List<int>());
 
@@ -72,7 +77,7 @@ namespace RaidPuzzler
         {
             Arrangement = new Dictionary<int, int>();
 
-            
+
             Arrangement.Add(0, 0);
             Arrangement.Add(1, 1);
             Arrangement.Add(2, 2);
@@ -108,7 +113,7 @@ namespace RaidPuzzler
             Arrangement.Add(27, 33);
             Arrangement.Add(28, 34);
             Arrangement.Add(29, 35);
-             
+
             /*
             Arrangement.Add(0, 1);
             Arrangement.Add(1, 2);
@@ -160,7 +165,7 @@ namespace RaidPuzzler
 
         public IEnumerable<int> GetImagePoss(Dictionary<string, List<int>> list)
         {
-            int i = 0;
+            int diskId = 0;
             int repeatSizeOnDisk = NumDiscs * ChunkSize;
             int dataSizeOnDisk = (NumDiscs - 1) * ChunkSize;
 
@@ -173,12 +178,12 @@ namespace RaidPuzzler
                     //in: start, disk(i)
                     //out: basePos + otherPos * ChunkSize + offsetInChunk 
                     int ret;
-                    CalcPositionDiskToVirtual(start, i, out ret);
+                    CalcPositionDiskToVirtual(start, DiskPositions[diskId], out ret);
 
                     if (ret != -1)
                         yield return ret;
                 }
-                i++;
+                diskId++;
             }
         }
 
@@ -247,11 +252,18 @@ namespace RaidPuzzler
             CalcPositionVirtualToDisk(start, out pos, out discId);
 
             long nextChunk = ((start / ChunkSize) + 1) * ChunkSize;
+            var filekeys = this.files.Select(o => o.Key).ToList();
 
             if (end < nextChunk) // ende im gleichen chunk
             {
-                //passiert auch nicht
-                System.Windows.Forms.MessageBox.Show("Der unwahrscheinliche fall ist eingetreten...");
+                //passiert bei großen chunks > 1MB
+
+                CalcPositionVirtualToDisk(start, out pos, out discId);
+                this.files[filekeys[discId]].Position = pos;
+                this.files[filekeys[discId]].Read(ret, (int)arraypos, (int)(end - start - arraypos));
+                arraypos += end - start - arraypos;
+
+                //System.Windows.Forms.MessageBox.Show("Der unwahrscheinliche fall ist eingetreten...");
             }
             else if (end == nextChunk)
             {
@@ -263,7 +275,6 @@ namespace RaidPuzzler
                 // es geht über den chunk hinaus...
 
                 // lesen bis zum ende
-                var filekeys = this.files.Select(o => o.Key).ToList();
 
                 long toEnd = nextChunk - start;
 
@@ -312,13 +323,18 @@ namespace RaidPuzzler
 
             foreach (var start in starts)
             {
-                int nextEnd = -1;
+                int nextEnd = start + 3 * 1024 * 1024;
                 if (ends.Where(o => o > start).Any())
                 {
                     nextEnd = ends.Where(o => o > start).First();
                 }
 
-                if (nextEnd != -1)
+                if ((nextEnd - start) > 25 * 1024 * 2014)
+                {
+                    nextEnd = start + 25 * 1024 * 1024;
+                }
+
+                //if (nextEnd != -1)
                 {
                     long onDiskStart;
                     int diskId;

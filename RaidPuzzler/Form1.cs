@@ -34,8 +34,9 @@ namespace RaidPuzzler
                     foreach (var file in ofd.FileNames)
                     {
                         listBox1.Items.Add(Path.GetFileName(file));
-                        rs.AddFile(file);
                     }
+                    backgroundWorker1.RunWorkerAsync(ofd.FileNames);
+                    this.Enabled = false;
                 }
                 else
                 {
@@ -43,74 +44,53 @@ namespace RaidPuzzler
                 }
             }
 
-            rs.SetArrangement();
 
-            DataTable dt = new DataTable();
-            for (int i = 0; i < rs.NumDiscs; i++)
-            {
-                dt.Columns.Add(i.ToString());
-            }
 
-            for (int i = 0; i < rs.NumDiscs; i++)
-            {
-                //rs.
-                var row = dt.NewRow();
 
-                for (int j = 0; j < rs.NumDiscs; j++)
-                {
-                    var q = rs.Arrangement.Where(o => o.Value == rs.NumDiscs * i + j);
-
-                    //dt.Columns.Add(i.ToString());
-                    if (q.Any())
-                    {
-                        row.SetField(j, q.First().Key);
-                    }
-                    else
-                    {
-                        row.SetField(j, "P");
-                    }
-                }
-
-                dt.Rows.Add(row);
-
-            }
-
-            dataGridView1.DataSource = dt;
-            dataGridView1.RowHeadersVisible = false;
-            //dataGridView1.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            foreach (DataGridViewColumn col in dataGridView1.Columns)
-            {
-                col.Width = 25;
-                col.SortMode = DataGridViewColumnSortMode.NotSortable;
-            }
-
-            FillPictures();
         }
 
+        RaidSimulator.Picture lastPic = null;
         private void FillPictures()
         {
-            RaidSimulator.Picture pic = null;
             if (comboBox2.SelectedItem != null)
             {
-                pic = comboBox2.SelectedItem as RaidSimulator.Picture;
+                lastPic = comboBox2.SelectedItem as RaidSimulator.Picture;
             }
 
             List<RaidSimulator.Picture> pics = rs.GetPictures();
             comboBox2.DataSource = pics;
 
-            if (pic != null)
+            if (lastPic != null)
             {
-                var q = pics.Where(p => p.OnDiskStart == pic.OnDiskStart && p.DiskId == pic.DiskId);
+                var q = pics.Where(p => p.OnDiskStart == lastPic.OnDiskStart && p.DiskId == lastPic.DiskId);
                 if (q.Any())
                 {
                     comboBox2.SelectedItem = q.First();
+                }
+                else
+                {
+                    comboBox2.SelectedItem = null;
                 }
             }
         }
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
-            pictureBox1.Image = (comboBox2.SelectedItem as RaidSimulator.Picture).GetImage();
+            if (comboBox2.SelectedItem != null)
+            {
+                pictureBox1.Image = (comboBox2.SelectedItem as RaidSimulator.Picture).GetImage();
+
+                if (pictureBox1.Image != null)
+                {
+                    //pictureBox1.Image.
+                    toolStripStatusLabel1.Text = string.Format("Size: {0} x {1}", pictureBox1.Image.Width, pictureBox1.Image.Height);
+                }
+
+            }
+            else
+            {
+                pictureBox1.Image = null;
+            }
         }
 
         private void dataGridView1_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
@@ -180,7 +160,7 @@ namespace RaidPuzzler
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
             int o;
-            if (int.TryParse(textBox1.Text, out o))
+            if (int.TryParse(textBox1.Text, out o) && o > 0)
             {
                 rs.ChunkSize = o * 1024;
                 this.FillPictures();
@@ -189,13 +169,99 @@ namespace RaidPuzzler
 
         private void button1_Click(object sender, EventArgs e)
         {
-            using(SaveFileDialog sfd = new SaveFileDialog())
+            using (SaveFileDialog sfd = new SaveFileDialog())
             {
 
                 if (sfd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
                     rs.WriteAllData(sfd.FileName);
                 }
+            }
+
+        }
+
+        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        {
+            string[] files = e.Argument as string[];
+            int i = 1;
+            int j = 0;
+            backgroundWorker1.ReportProgress(100 * i / files.Length);
+            rs.DiskPositions = new Dictionary<int, int>();
+            foreach (var file in files)
+            {
+                backgroundWorker1.ReportProgress(100 * i++ / files.Length);
+
+                rs.AddFile(file);
+                rs.DiskPositions.Add(j, j);
+                j++;
+            }
+        }
+
+        private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            toolStripProgressBar1.ProgressBar.Value = e.ProgressPercentage;
+        }
+
+        private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            toolStripProgressBar1.Visible = false;
+            this.Enabled = true;
+
+            rs.SetArrangement();
+
+            DataTable dt = new DataTable();
+            for (int i = 0; i < rs.NumDiscs; i++)
+            {
+                dt.Columns.Add(i.ToString());
+            }
+
+            for (int i = 0; i < rs.NumDiscs; i++)
+            {
+                //rs.
+                var row = dt.NewRow();
+
+                for (int j = 0; j < rs.NumDiscs; j++)
+                {
+                    var q = rs.Arrangement.Where(o => o.Value == rs.NumDiscs * i + j);
+
+                    //dt.Columns.Add(i.ToString());
+                    if (q.Any())
+                    {
+                        row.SetField(j, q.First().Key);
+                    }
+                    else
+                    {
+                        row.SetField(j, "P");
+                    }
+                }
+
+                dt.Rows.Add(row);
+
+            }
+
+            dataGridView1.DataSource = dt;
+            dataGridView1.RowHeadersVisible = false;
+            //dataGridView1.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            foreach (DataGridViewColumn col in dataGridView1.Columns)
+            {
+                col.Width = 25;
+                col.SortMode = DataGridViewColumnSortMode.NotSortable;
+            }
+
+            FillPictures();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            // diskorder up
+            if (listBox1.SelectedIndex > 0)
+            {
+                int up = listBox1.SelectedIndex - 1;
+                var tmp = listBox1.Items[listBox1.SelectedIndex];
+                listBox1.Items[listBox1.SelectedIndex] = listBox1.Items[up];
+                listBox1.Items[up] = tmp;
+                listBox1.SelectedIndex = up;
+
             }
 
         }
