@@ -73,83 +73,173 @@ namespace RaidPuzzler
 
         }
 
-        public void SetArrangement()
+        public enum EnumArrangement
+        {
+            la, ls, ra, rs
+        }
+
+        public void SetArrangement(EnumArrangement arr)
         {
             Arrangement = new Dictionary<int, int>();
 
+            switch (arr)
+            {
+                case EnumArrangement.la:
+                    Arrangement.Add(0, 0);
+                    Arrangement.Add(1, 1);
+                    Arrangement.Add(2, 2);
+                    Arrangement.Add(3, 3);
+                    Arrangement.Add(4, 4);
 
-            Arrangement.Add(0, 0);
-            Arrangement.Add(1, 1);
-            Arrangement.Add(2, 2);
-            Arrangement.Add(3, 3);
-            Arrangement.Add(4, 4);
+                    Arrangement.Add(5, 6);
+                    Arrangement.Add(6, 7);
+                    Arrangement.Add(7, 8);
+                    Arrangement.Add(8, 9);
+                    Arrangement.Add(9, 11);
 
-            Arrangement.Add(5, 6);
-            Arrangement.Add(6, 7);
-            Arrangement.Add(7, 8);
-            Arrangement.Add(8, 9);
-            Arrangement.Add(9, 11);
+                    Arrangement.Add(10, 12);
+                    Arrangement.Add(11, 13);
+                    Arrangement.Add(12, 14);
+                    Arrangement.Add(13, 16);
+                    Arrangement.Add(14, 17);
 
-            Arrangement.Add(10, 12);
-            Arrangement.Add(11, 13);
-            Arrangement.Add(12, 14);
-            Arrangement.Add(13, 16);
-            Arrangement.Add(14, 17);
+                    Arrangement.Add(15, 18);
+                    Arrangement.Add(16, 19);
+                    Arrangement.Add(17, 21);
+                    Arrangement.Add(18, 22);
+                    Arrangement.Add(19, 23);
 
-            Arrangement.Add(15, 18);
-            Arrangement.Add(16, 19);
-            Arrangement.Add(17, 21);
-            Arrangement.Add(18, 22);
-            Arrangement.Add(19, 23);
+                    Arrangement.Add(20, 24);
+                    Arrangement.Add(21, 26);
+                    Arrangement.Add(22, 27);
+                    Arrangement.Add(23, 28);
+                    Arrangement.Add(24, 29);
 
-            Arrangement.Add(20, 24);
-            Arrangement.Add(21, 26);
-            Arrangement.Add(22, 27);
-            Arrangement.Add(23, 28);
-            Arrangement.Add(24, 29);
+                    Arrangement.Add(25, 31);
+                    Arrangement.Add(26, 32);
+                    Arrangement.Add(27, 33);
+                    Arrangement.Add(28, 34);
+                    Arrangement.Add(29, 35);
+                    break;
+                case EnumArrangement.ls:
+                    Arrangement.Add(0, 0);
+                    Arrangement.Add(1, 1);
+                    Arrangement.Add(2, 2);
+                    Arrangement.Add(3, 3);
+                    Arrangement.Add(4, 4);
 
-            Arrangement.Add(25, 31);
-            Arrangement.Add(26, 32);
-            Arrangement.Add(27, 33);
-            Arrangement.Add(28, 34);
-            Arrangement.Add(29, 35);
+                    Arrangement.Add(5, 11);
+                    Arrangement.Add(6, 6);
+                    Arrangement.Add(7, 7);
+                    Arrangement.Add(8, 8);
+                    Arrangement.Add(9, 9);
+
+                    Arrangement.Add(10, 16);
+                    Arrangement.Add(11, 17);
+                    Arrangement.Add(12, 12);
+                    Arrangement.Add(13, 13);
+                    Arrangement.Add(14, 14);
+
+                    Arrangement.Add(15, 21);
+                    Arrangement.Add(16, 22);
+                    Arrangement.Add(17, 23);
+                    Arrangement.Add(18, 18);
+                    Arrangement.Add(19, 19);
+
+                    Arrangement.Add(20, 26);
+                    Arrangement.Add(21, 27);
+                    Arrangement.Add(22, 28);
+                    Arrangement.Add(23, 29);
+                    Arrangement.Add(24, 24);
+
+                    Arrangement.Add(25, 31);
+                    Arrangement.Add(26, 32);
+                    Arrangement.Add(27, 33);
+                    Arrangement.Add(28, 34);
+                    Arrangement.Add(29, 35);
+                    break;
+                case EnumArrangement.ra:
+                    Arrangement.Add(0, 1);
+                    Arrangement.Add(1, 2);
+                    Arrangement.Add(2, 3);
+                    Arrangement.Add(3, 4);
+                    Arrangement.Add(4, 5);
+
+                    Arrangement.Add(5, 6);
+                    Arrangement.Add(6, 8);
+                    Arrangement.Add(7, 9);
+                    Arrangement.Add(8, 10);
+                    Arrangement.Add(9, 11);
+
+                    Arrangement.Add(10, 12);
+                    Arrangement.Add(11, 13);
+                    Arrangement.Add(12, 15);
+                    Arrangement.Add(13, 16);
+                    Arrangement.Add(14, 17);
+
+                    Arrangement.Add(15, 18);
+                    Arrangement.Add(16, 19);
+                    Arrangement.Add(17, 20);
+                    Arrangement.Add(18, 22);
+                    Arrangement.Add(19, 23);
+
+                    Arrangement.Add(20, 24);
+                    Arrangement.Add(21, 25);
+                    Arrangement.Add(22, 26);
+                    Arrangement.Add(23, 27);
+                    Arrangement.Add(24, 29);
+
+                    Arrangement.Add(25, 30);
+                    Arrangement.Add(26, 31);
+                    Arrangement.Add(27, 32);
+                    Arrangement.Add(28, 33);
+                    Arrangement.Add(29, 34);
+                    break;
+                case EnumArrangement.rs:
+                    Arrangement.Add(0, 1);
+                    Arrangement.Add(1, 2);
+                    Arrangement.Add(2, 3);
+                    Arrangement.Add(3, 4);
+                    Arrangement.Add(4, 5);
+
+                    Arrangement.Add(5, 8);
+                    Arrangement.Add(6, 9);
+                    Arrangement.Add(7, 10);
+                    Arrangement.Add(8, 11);
+                    Arrangement.Add(9, 6);
+
+                    Arrangement.Add(10, 15);
+                    Arrangement.Add(11, 16);
+                    Arrangement.Add(12, 17);
+                    Arrangement.Add(13, 12);
+                    Arrangement.Add(14, 13);
+
+                    Arrangement.Add(15, 22);
+                    Arrangement.Add(16, 23);
+                    Arrangement.Add(17, 18);
+                    Arrangement.Add(18, 19);
+                    Arrangement.Add(19, 20);
+
+                    Arrangement.Add(20, 29);
+                    Arrangement.Add(21, 24);
+                    Arrangement.Add(22, 25);
+                    Arrangement.Add(23, 26);
+                    Arrangement.Add(24, 27);
+
+                    Arrangement.Add(25, 30);
+                    Arrangement.Add(26, 31);
+                    Arrangement.Add(27, 32);
+                    Arrangement.Add(28, 33);
+                    Arrangement.Add(29, 34);
+                    break;
+            }
+
+
+
+
 
             /*
-            Arrangement.Add(0, 1);
-            Arrangement.Add(1, 2);
-            Arrangement.Add(2, 3);
-            Arrangement.Add(3, 4);
-            Arrangement.Add(4, 5);
-
-            Arrangement.Add(5, 6);
-            Arrangement.Add(6, 8);
-            Arrangement.Add(7, 9);
-            Arrangement.Add(8, 10);
-            Arrangement.Add(9, 11);
-
-            Arrangement.Add(10, 12);
-            Arrangement.Add(11, 13);
-            Arrangement.Add(12, 15);
-            Arrangement.Add(13, 16);
-            Arrangement.Add(14, 17);
-
-            Arrangement.Add(15, 18);
-            Arrangement.Add(16, 19);
-            Arrangement.Add(17, 20);
-            Arrangement.Add(18, 22);
-            Arrangement.Add(19, 23);
-
-            Arrangement.Add(20, 24);
-            Arrangement.Add(21, 25);
-            Arrangement.Add(22, 26);
-            Arrangement.Add(23, 27);
-            Arrangement.Add(24, 29);
-
-            Arrangement.Add(25, 30);
-            Arrangement.Add(26, 31);
-            Arrangement.Add(27, 32);
-            Arrangement.Add(28, 33);
-            Arrangement.Add(29, 34);
+            
             */
         }
 
@@ -230,7 +320,7 @@ namespace RaidPuzzler
             int onDiskTablePos = Arrangement[(int)inTablePos];
             int diskPos = onDiskTablePos % NumDiscs;
             discId = DiskPositions.First(p => p.Value == diskPos).Key;
-             
+
             int line = onDiskTablePos / NumDiscs;
 
             startOnDisk = basePosInDisk + line * ChunkSize + offsetInChunk;

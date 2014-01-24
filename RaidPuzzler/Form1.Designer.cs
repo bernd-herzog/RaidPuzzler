@@ -46,6 +46,9 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
+            this.button5 = new System.Windows.Forms.Button();
+            this.button6 = new System.Windows.Forms.Button();
+            this.button7 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -64,6 +67,9 @@
             // 
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.button7);
+            this.groupBox1.Controls.Add(this.button6);
+            this.groupBox1.Controls.Add(this.button5);
             this.groupBox1.Controls.Add(this.button4);
             this.groupBox1.Controls.Add(this.button3);
             this.groupBox1.Controls.Add(this.button2);
@@ -110,11 +116,11 @@
             this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(6, 178);
+            this.dataGridView1.Location = new System.Drawing.Point(6, 203);
             this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.Size = new System.Drawing.Size(154, 240);
+            this.dataGridView1.Size = new System.Drawing.Size(154, 215);
             this.dataGridView1.TabIndex = 15;
             this.dataGridView1.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_CellMouseDown);
             this.dataGridView1.DragDrop += new System.Windows.Forms.DragEventHandler(this.dataGridView1_DragDrop);
@@ -123,7 +129,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 162);
+            this.label2.Location = new System.Drawing.Point(6, 182);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(68, 13);
             this.label2.TabIndex = 13;
@@ -210,7 +216,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(137, 32);
+            this.button2.Location = new System.Drawing.Point(137, 48);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(23, 23);
             this.button2.TabIndex = 20;
@@ -220,7 +226,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(137, 61);
+            this.button3.Location = new System.Drawing.Point(137, 77);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(23, 23);
             this.button3.TabIndex = 21;
@@ -230,12 +236,43 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(137, 90);
+            this.button4.Location = new System.Drawing.Point(93, 177);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(23, 23);
             this.button4.TabIndex = 22;
-            this.button4.Text = "x";
+            this.button4.Text = "ls";
             this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(115, 177);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(24, 23);
+            this.button5.TabIndex = 23;
+            this.button5.Text = "ra";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
+            // button6
+            // 
+            this.button6.Location = new System.Drawing.Point(138, 177);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(23, 23);
+            this.button6.TabIndex = 24;
+            this.button6.Text = "rs";
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
+            // 
+            // button7
+            // 
+            this.button7.Location = new System.Drawing.Point(71, 177);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(23, 23);
+            this.button7.TabIndex = 25;
+            this.button7.Text = "la";
+            this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
             // Form1
             // 
@@ -278,9 +315,12 @@
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
-        private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button7;
+        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button button4;
     }
 }
 

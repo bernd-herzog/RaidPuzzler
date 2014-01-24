@@ -207,7 +207,7 @@ namespace RaidPuzzler
             toolStripProgressBar1.Visible = false;
             this.Enabled = true;
 
-            rs.SetArrangement();
+            rs.SetArrangement(RaidSimulator.EnumArrangement.la);
 
             DataTable dt = new DataTable();
             for (int i = 0; i < rs.NumDiscs; i++)
@@ -356,6 +356,190 @@ namespace RaidPuzzler
                 FillPictures();
 
             }
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            rs.SetArrangement(RaidSimulator.EnumArrangement.la);
+
+            DataTable dt = new DataTable();
+            for (int i = 0; i < rs.NumDiscs; i++)
+            {
+                dt.Columns.Add(i.ToString());
+            }
+
+            for (int i = 0; i < rs.NumDiscs; i++)
+            {
+                //rs.
+                var row = dt.NewRow();
+
+                for (int j = 0; j < rs.NumDiscs; j++)
+                {
+                    var q = rs.Arrangement.Where(o => o.Value == rs.NumDiscs * i + j);
+
+                    //dt.Columns.Add(i.ToString());
+                    if (q.Any())
+                    {
+                        row.SetField(j, q.First().Key);
+                    }
+                    else
+                    {
+                        row.SetField(j, "P");
+                    }
+                }
+
+                dt.Rows.Add(row);
+
+            }
+
+            dataGridView1.DataSource = dt;
+            dataGridView1.RowHeadersVisible = false;
+            //dataGridView1.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            foreach (DataGridViewColumn col in dataGridView1.Columns)
+            {
+                col.Width = 25;
+                col.SortMode = DataGridViewColumnSortMode.NotSortable;
+            }
+
+            FillPictures();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            rs.SetArrangement(RaidSimulator.EnumArrangement.ls);
+
+            DataTable dt = new DataTable();
+            for (int i = 0; i < rs.NumDiscs; i++)
+            {
+                dt.Columns.Add(i.ToString());
+            }
+
+            for (int i = 0; i < rs.NumDiscs; i++)
+            {
+                //rs.
+                var row = dt.NewRow();
+
+                for (int j = 0; j < rs.NumDiscs; j++)
+                {
+                    var q = rs.Arrangement.Where(o => o.Value == rs.NumDiscs * i + j);
+
+                    //dt.Columns.Add(i.ToString());
+                    if (q.Any())
+                    {
+                        row.SetField(j, q.First().Key);
+                    }
+                    else
+                    {
+                        row.SetField(j, "P");
+                    }
+                }
+
+                dt.Rows.Add(row);
+
+            }
+
+            dataGridView1.DataSource = dt;
+            dataGridView1.RowHeadersVisible = false;
+            //dataGridView1.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            foreach (DataGridViewColumn col in dataGridView1.Columns)
+            {
+                col.Width = 25;
+                col.SortMode = DataGridViewColumnSortMode.NotSortable;
+            }
+
+            FillPictures();
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            rs.SetArrangement(RaidSimulator.EnumArrangement.ra);
+
+            DataTable dt = new DataTable();
+            for (int i = 0; i < rs.NumDiscs; i++)
+            {
+                dt.Columns.Add(i.ToString());
+            }
+
+            for (int i = 0; i < rs.NumDiscs; i++)
+            {
+                //rs.
+                var row = dt.NewRow();
+
+                for (int j = 0; j < rs.NumDiscs; j++)
+                {
+                    var q = rs.Arrangement.Where(o => o.Value == rs.NumDiscs * i + j);
+
+                    //dt.Columns.Add(i.ToString());
+                    if (q.Any())
+                    {
+                        row.SetField(j, q.First().Key);
+                    }
+                    else
+                    {
+                        row.SetField(j, "P");
+                    }
+                }
+
+                dt.Rows.Add(row);
+
+            }
+
+            dataGridView1.DataSource = dt;
+            dataGridView1.RowHeadersVisible = false;
+            //dataGridView1.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            foreach (DataGridViewColumn col in dataGridView1.Columns)
+            {
+                col.Width = 25;
+                col.SortMode = DataGridViewColumnSortMode.NotSortable;
+            }
+
+            FillPictures();
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            rs.SetArrangement(RaidSimulator.EnumArrangement.rs);
+
+            DataTable dt = new DataTable();
+            for (int i = 0; i < rs.NumDiscs; i++)
+            {
+                dt.Columns.Add(i.ToString());
+            }
+
+            for (int i = 0; i < rs.NumDiscs; i++)
+            {
+                //rs.
+                var row = dt.NewRow();
+
+                for (int j = 0; j < rs.NumDiscs; j++)
+                {
+                    var q = rs.Arrangement.Where(o => o.Value == rs.NumDiscs * i + j);
+
+                    //dt.Columns.Add(i.ToString());
+                    if (q.Any())
+                    {
+                        row.SetField(j, q.First().Key);
+                    }
+                    else
+                    {
+                        row.SetField(j, "P");
+                    }
+                }
+
+                dt.Rows.Add(row);
+
+            }
+
+            dataGridView1.DataSource = dt;
+            dataGridView1.RowHeadersVisible = false;
+            //dataGridView1.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            foreach (DataGridViewColumn col in dataGridView1.Columns)
+            {
+                col.Width = 25;
+                col.SortMode = DataGridViewColumnSortMode.NotSortable;
+            }
+
+            FillPictures();
         }
     }
 }
