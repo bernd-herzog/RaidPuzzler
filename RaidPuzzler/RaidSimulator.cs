@@ -354,8 +354,6 @@ namespace RaidPuzzler
                 this.files[filekeys[discId]].Position = pos;
                 this.files[filekeys[discId]].Read(ret, (int)arraypos, (int)(end - start - arraypos));
                 arraypos += end - start - arraypos;
-
-                //System.Windows.Forms.MessageBox.Show("Der unwahrscheinliche fall ist eingetreten...");
             }
             else if (end == nextChunk)
             {
@@ -491,12 +489,7 @@ namespace RaidPuzzler
         {
             using (var fs = File.OpenWrite(p))
             {
-
-                int repeatSizeOnDisk = NumDiscs * ChunkSize;
-                int dataSizeOnDisk = (NumDiscs - 1) * ChunkSize;
-
                 long virtualSize = (NumDiscs - 1) * Size;
-
 
                 for (long i = 0; i < virtualSize; i += 1024 * 1024)
                 {
