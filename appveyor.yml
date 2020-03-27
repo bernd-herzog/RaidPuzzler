@@ -11,3 +11,9 @@ after_build:
 artifacts:
     - path: RaidPuzzler.7z
       name: RaidPuzzler
+
+deploy:
+    - provider: Webhook
+      url: https://app.signpath.io/API/v1/0b1237fd-5307-4b83-ae70-d6a0dc0cea19/Integrations/AppVeyor?ProjectKey=raid_puzzler&SigningPolicyKey=sign_raid_puzzler
+      authorization:
+        secure: KiBRw03cnBHoNt+O5Oe6YA7XVivZWK4XEwgopMXaS+CiIP60LvIYrseHJ72G9ND2Q4iOlk2LgkaDXdVtzXTBDw==
