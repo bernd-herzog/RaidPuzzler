@@ -1,0 +1,13 @@
+platform: Any CPU
+configuration: Release
+
+build:
+    project: RaidPuzzler.sln
+    verbosity: minimal
+
+after_build:
+    ps: 7z a -mx8 -m0=BCJ -m1=LZMA2 -mmt8 -t7z -r -y RaidPuzzler.7z '.\RaidPuzzler\bin\Release\*'
+
+artifacts:
+    - path: RaidPuzzler.7z
+      name: RaidPuzzler
